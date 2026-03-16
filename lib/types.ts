@@ -1,6 +1,18 @@
 export type Locale = "ru" | "en" | "uk" | "de" | "es" | "pt";
 
-export type MessageDictionary = typeof import("@/messages/en").default;
+type DeepWiden<T> = T extends string
+  ? string
+  : T extends number
+    ? number
+    : T extends boolean
+      ? boolean
+      : T extends readonly (infer Item)[]
+        ? DeepWiden<Item>[]
+        : T extends object
+          ? { [Key in keyof T]: DeepWiden<T[Key]> }
+          : T;
+
+export type MessageDictionary = DeepWiden<typeof import("@/messages/en").default>;
 
 export type WarningKey =
   | "steamApiMissing"

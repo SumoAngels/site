@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import Link from "next/link";
 
 import type { Locale, MessageDictionary } from "@/lib/types";
@@ -47,7 +48,15 @@ export function SiteHeader({ locale, messages }: SiteHeaderProps) {
             </Link>
           </nav>
 
-          <LanguageSwitcher currentLocale={locale} label={messages.language.label} />
+          <Suspense
+            fallback={
+              <div className="glass-tag rounded-full px-3 py-2 text-xs text-mute">
+                {messages.language.label}
+              </div>
+            }
+          >
+            <LanguageSwitcher currentLocale={locale} label={messages.language.label} />
+          </Suspense>
         </div>
       </div>
     </header>

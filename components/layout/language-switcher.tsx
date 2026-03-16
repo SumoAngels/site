@@ -1,7 +1,7 @@
 "use client";
 
 import { useTransition } from "react";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 import { localeNames, locales } from "@/lib/i18n";
 import type { Locale } from "@/lib/types";
@@ -15,7 +15,6 @@ type LanguageSwitcherProps = {
 export function LanguageSwitcher({ currentLocale, label }: LanguageSwitcherProps) {
   const router = useRouter();
   const pathname = usePathname();
-  const searchParams = useSearchParams();
   const [isPending, startTransition] = useTransition();
 
   return (
@@ -36,8 +35,8 @@ export function LanguageSwitcher({ currentLocale, label }: LanguageSwitcherProps
             segments[1] = nextLocale;
           }
 
-          const query = searchParams.toString();
-          const nextPath = `${segments.join("/")}${query ? `?${query}` : ""}`;
+          const query = typeof window === "undefined" ? "" : window.location.search;
+          const nextPath = `${segments.join("/")}${query}`;
 
           startTransition(() => {
             router.push(nextPath);

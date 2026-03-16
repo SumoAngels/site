@@ -7,9 +7,9 @@ type DeepWiden<T> = T extends string
     : T extends boolean
       ? boolean
       : T extends readonly (infer Item)[]
-        ? DeepWiden<Item>[]
+        ? readonly DeepWiden<Item>[]
         : T extends object
-          ? { [Key in keyof T]: DeepWiden<T[Key]> }
+          ? { readonly [Key in keyof T]: DeepWiden<T[Key]> }
           : T;
 
 export type MessageDictionary = DeepWiden<typeof import("@/messages/en").default>;

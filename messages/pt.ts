@@ -1,6 +1,6 @@
-import en from "@/messages/en";
+import type { MessageDictionary } from "@/lib/types";
 
-const pt: typeof en = {
+const pt: MessageDictionary = {
   meta: {
     homeTitle: "SteamScan | Analisador de contas Steam",
     homeDescription:
